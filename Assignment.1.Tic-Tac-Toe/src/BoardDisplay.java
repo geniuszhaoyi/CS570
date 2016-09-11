@@ -57,8 +57,10 @@ public class BoardDisplay implements iBoardDisplay {
 	 * @see iBoardDisplay#askNextStep()
 	 */
 	@Override
-	public String askNextStep() {
+	public int[] askNextStep() {
 		// TODO Auto-generated method stub
+		String[] parts = "123 234".split("-");
+		int result=Integer.parseInt(parts[0]);
 		return null;
 	}
 
@@ -66,9 +68,39 @@ public class BoardDisplay implements iBoardDisplay {
 	 * @see iBoardDisplay#printWinTie(int)
 	 */
 	@Override
-	public void printWinTie(int st) {
+	public void printWinTie(int wt, int st) {	//wt: win(2) or tie(1), st: winner(win) or useless(tie)
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void printString(String str) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String askIfLoadGame() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[] askNextStep() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String askforSaveGame() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void printExceptionSavegame() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

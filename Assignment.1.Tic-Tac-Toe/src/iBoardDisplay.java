@@ -7,12 +7,16 @@
  * @author ZhaoYi
  *
  */
-public interface iBoardDisplay {
+public interface iBoardDisplay{
 	void printBoard(Board board);
+	void printWinTie(int wt, int st);
+	void printString(String str);
 	int askNumPlayers();
 	int askNumRows();
 	int askNumWinseq();
 	String askFilename();
-	String askNextStep();	//return two numbers seqarated by space or "Q"
-	void printWinTie(int st);
+	int []askNextStep();	//return two numbers separated by space or "Q"
+	String askIfLoadGame();
+	String askforSaveGame();
+	void printExceptionSavegame();
 }
