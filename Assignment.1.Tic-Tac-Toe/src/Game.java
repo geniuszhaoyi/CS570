@@ -7,6 +7,11 @@
  *
  */
 public class Game {
+	/**
+	 * Control module. 
+	 * @throws IngameException
+	 * @see File "Flow Chart.pdf"
+	 */
 	static void game() throws IngameException{
 		Board board;
 		iBoardDisplay ibd=new BoardDisplay();

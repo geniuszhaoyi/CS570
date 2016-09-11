@@ -45,15 +45,6 @@ public class BoardDisplay implements iBoardDisplay {
 	}
 
 	/* (non-Javadoc)
-	 * @see iBoardDisplay#askFilename()
-	 */
-	@Override
-	public String askFilename() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see iBoardDisplay#askNextStep()
 	 */
 	@Override
@@ -74,19 +65,7 @@ public class BoardDisplay implements iBoardDisplay {
 	}
 
 	@Override
-	public void printString(String str) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public String askIfLoadGame() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int[] askNextStep() {
 		// TODO Auto-generated method stub
 		return null;
 	}
