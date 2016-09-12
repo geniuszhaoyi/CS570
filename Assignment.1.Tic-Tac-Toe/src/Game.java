@@ -45,14 +45,14 @@ public class Game {
 				break;
 			}else{
 				try{
-					board.play(nextStep[0], nextStep[1]);
+					int ck=board.play(nextStep[0], nextStep[1]);
+					if(ck!=0){	//Someone wins(2) or tie(1)
+						ibd.printBoard(board);
+						ibd.printWinTie(ck,board.winner);
+						break;
+					}
 				}catch(IngameException e){
 					ibd.printExceptionSavegame();
-				}
-				int ck=board.check();
-				if(ck!=0){	//Someone wins(2) or tie(1)
-					ibd.printBoard(board);
-					ibd.printWinTie(ck,board.winner);
 					break;
 				}
 			}

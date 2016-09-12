@@ -1,3 +1,6 @@
+import java.io.*;
+import java.util.*;
+
 /**
  * 
  */
@@ -44,13 +47,14 @@ public class Board {
 	 */
 	Board(int NumPlayer, int NumRows, int NumWinseq) throws IngameException{
 		// TODO Complete this function
+		this.n=NumRows;
+		this.m=NumPlayer;
+		this.k=NumWinseq;
+		this.cntplayer=0;
 		this.board=new int[NumRows][NumRows];
 		for(int i=0;i<NumRows;i++) for(int j=0;j<NumRows;j++){
 			this.board[i][j]=-1;
 		}
-		
-		// TODO Check if winning is possible
-		
 	}
 	/**
 	 * Recreate a saved game from a file, given filename. 
@@ -58,9 +62,25 @@ public class Board {
 	 * @param Filename	Filename of the saved game. 
 	 * @throws IngameException
 	 */
-	Board(String Filename) throws IngameException{
-		// TODO Complete this function
-	}
+	Board(String filename) throws IngameException{
+        try{
+        	Scanner sc = new Scanner(filename);
+        	this.n=sc.nextInt();
+        	this.m=sc.nextInt();
+        	this.k=sc.nextInt();
+        	this.cntplayer=sc.nextInt();
+        	this.board=new int[this.n][this.n];
+	        for(int i=0;i<this.n;i++){
+	        	for(int j=0;j<this.n;j++){
+	        		this.board[i][j]=sc.nextInt();
+	        	}
+	        }
+        	
+	        sc.close();
+        }catch(NoSuchElementException e){
+			throw new IngameException("IO Exception: File is corruped");
+        }
+    }
 	/**
 	 * Save game to a file, given filename. 
 	 * Throw IngameException if save game failed. 
@@ -68,26 +88,73 @@ public class Board {
 	 * @throws IngameException
 	 */
 	void saveGame(String filename) throws IngameException{
-		// TODO Complete this function
+		File file = new File(filename); 
+		try{
+			file.createNewFile();
+	        BufferedWriter out = new BufferedWriter(new FileWriter(file));  
+	        out.write(""+this.n+" "+this.m+" "+this.k+" "+this.cntplayer+"\n");
+	        for(int i=0;i<this.n;i++){
+	        	for(int j=0;j<this.n;j++){
+	        		out.write(""+this.board[i][j]+" ");
+	        	}
+	        	out.write("\n");
+	        }
+	        out.flush();  
+	        out.close();
+		}catch(IOException e){
+			throw new IngameException("IO Exception: Write file failed. ");
+		}
 	}
 	/**
-	 * Play the game. 
+	 * Play the game and Check if the game is win or tie. . 
 	 * Place the current player's piece to the board. 
+	 * Check if the game is win or tie. 
 	 * Throw IngameException if cell is occupied. 
 	 * @param x x
 	 * @param y y
 	 * @throws IngameException
 	 */
-	void play(int x,int y) throws IngameException{
+	int play(int x,int y) throws IngameException{
 		if(this.board[x][y]!=-1) throw new IngameException("This place is occupied! ");
-		// TODO Complete this function
-	}
-	/**
-	 * Check if the game is win or tie
-	 * @return 2 for win, 1 for tie or 0 for nothing. 
-	 */
-	int check(){
-		// TODO Complete this function
-		return -1;
+		this.board[x][y]=this.cntplayer;
+		
+		int longest;
+		// Check if game is WIN 
+		// check this row
+		longest=0;
+		for(int i=0;i<this.n;i++)
+			if(this.board[x][i]==cntplayer) if(++longest>=this.k){
+				winner=cntplayer;
+				return 2;
+			}else ;
+			else longest=0;
+		// check this column
+		longest=0;
+		for(int i=0;i<this.n;i++)
+			if(this.board[i][y]==cntplayer) if(++longest>=this.k){
+				winner=cntplayer;
+				return 2;
+			}else ;
+			else longest=0;
+		// check diagonal
+		for(int i=0;i<this.n;i++)
+			if(i+y-x>=0 && i+y-x<n && this.board[i][i+y-x]==cntplayer) if(++longest>=this.k){
+				winner=cntplayer;
+				return 2;
+			}else ;
+			else longest=0;
+		for(int i=0;i<this.n;i++)
+			if(x+y-i>=0 && x+y-i<n && this.board[i][x+y-i]==cntplayer) if(++longest>=this.k){
+				winner=cntplayer;
+				return 2;
+			}else ;
+			else longest=0;
+		
+		// Check if game is TIE
+		// check rows and columns
+		// TODO check if game is TIE
+		
+		cntplayer=(cntplayer+1)%this.m;
+		return 0;
 	}
 }
