@@ -1,6 +1,9 @@
+import java.util.Scanner;
+
 /**
  * 
  */
+
 
 /**
  * @author ZhaoYi
@@ -10,9 +13,26 @@ public class BoardDisplay implements iBoardDisplay {
 
 	/* (non-Javadoc)
 	 * @see iBoardDisplay#printBoard(Board)
+	 * 
+	 *        1   2   10 99  999
+	 *   1      | X | O | Z |   
+	 *       ---+---+---+---+---
+	 *   2   
+	 *       ---+---+---+---+---
+	 *   3
+	 *       ---+---+---+---+---
+	 *   
+	 *   
+	 * 100
+	 * 101  
+	 * 
+	 * board: n*n matrix
 	 */
 	@Override
 	public void printBoard(Board board) {
+		board.board[0][3]=1;
+		String rep="XOABCDEFGHIJKLMNPQRSTUVWYZ";
+		if(rep.charAt(board.board[0][3])=='X') ;
 		// TODO Auto-generated method stub
 
 	}
@@ -22,8 +42,11 @@ public class BoardDisplay implements iBoardDisplay {
 	 */
 	@Override
 	public int askNumPlayers() {
+		System.out.println("How many players: ");
+		Scanner reader=new Scanner(System.in);
+		int numplayers=reader.nextInt();
+		return numplayers;
 		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	/* (non-Javadoc)
