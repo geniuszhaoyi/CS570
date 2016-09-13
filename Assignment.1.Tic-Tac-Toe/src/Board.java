@@ -46,7 +46,6 @@ public class Board {
 	 * @throws IngameException
 	 */
 	Board(int NumPlayer, int NumRows, int NumWinseq) throws IngameException{
-		// TODO Complete this function
 		this.n=NumRows;
 		this.m=NumPlayer;
 		this.k=NumWinseq;
@@ -64,7 +63,8 @@ public class Board {
 	 */
 	Board(String filename) throws IngameException{
         try{
-        	Scanner sc = new Scanner(filename);
+        	File file = new File(filename);
+        	Scanner sc = new Scanner(file);
         	this.n=sc.nextInt();
         	this.m=sc.nextInt();
         	this.k=sc.nextInt();
@@ -79,7 +79,9 @@ public class Board {
 	        sc.close();
         }catch(NoSuchElementException e){
 			throw new IngameException("IO Exception: File is corruped");
-        }
+        } catch (FileNotFoundException e) {
+			throw new IngameException("IO Exception: File Not Found");
+		}
     }
 	/**
 	 * Save game to a file, given filename. 
@@ -118,43 +120,67 @@ public class Board {
 		if(this.board[x][y]!=-1) throw new IngameException("This place is occupied! ");
 		this.board[x][y]=this.cntplayer;
 		
-		int longest;
+		int n=this.n;
+		int dx[]={0,1,1,-1};
+		int dy[]={1,0,1,1};
+		
 		// Check if game is WIN 
 		// check this row
-		longest=0;
-		for(int i=0;i<this.n;i++)
-			if(this.board[x][i]==cntplayer) if(++longest>=this.k){
-				winner=cntplayer;
-				return 2;
-			}else ;
-			else longest=0;
-		// check this column
-		longest=0;
-		for(int i=0;i<this.n;i++)
-			if(this.board[i][y]==cntplayer) if(++longest>=this.k){
-				winner=cntplayer;
-				return 2;
-			}else ;
-			else longest=0;
-		// check diagonal
-		for(int i=0;i<this.n;i++)
-			if(i+y-x>=0 && i+y-x<n && this.board[i][i+y-x]==cntplayer) if(++longest>=this.k){
-				winner=cntplayer;
-				return 2;
-			}else ;
-			else longest=0;
-		for(int i=0;i<this.n;i++)
-			if(x+y-i>=0 && x+y-i<n && this.board[i][x+y-i]==cntplayer) if(++longest>=this.k){
-				winner=cntplayer;
-				return 2;
-			}else ;
-			else longest=0;
+		int sx[]={x,0,x-y,0};
+		int sy[]={0,y,0,x+y};
+		for(int d=0;d<4;d++){
+			int longest=0;
+			for(int i=0;i<n;i++){
+				int cx=sx[d]+dx[d]*i;
+				int cy=sy[d]+dy[d]*i;
+				if(cx<0 || cx>=n || cy<0 || cy>=n) continue;
+				if(this.board[cx][cy]==cntplayer) if(++longest>=this.k){
+					winner=cntplayer;
+					return 2;
+				}else ;
+				else longest=0;
+			}
+		}
 		
 		// Check if game is TIE
 		// check rows and columns
-		// TODO check if game is TIE
+		int fsx[]=new int[n*3];
+		int fsy[]=new int[n*3];
+		for(int c=0;c<n;c++){
+			fsx[c]=0;
+			fsy[c]=n-c-1;
+		}
+		for(int c=n;c<n*3;c++){
+			fsx[c]=c-n;
+			fsy[c]=0;
+		}
+		for(int c=0;c<n*3;c++){
+			for(int d=0;d<4;d++){
+				int lostplr=0;
+				int lostemp=0;
+				int lstplr=-1;
+				for(int i=0;i<n;i++){
+					int cx=fsx[c]+dx[d]*i;
+					int cy=fsy[c]+dy[d]*i;
+					if(cx<0 || cx>=n || cy<0 || cy>=n) continue;
+					if(this.board[cx][cy]==-1){
+						lostemp+=1;
+					}else if(this.board[cx][cy]==lstplr){
+						lostplr=lostplr+lostemp+1;
+						lostemp=0;
+					}else{
+						lostplr=lostemp+1;
+						lostemp=0;
+						lstplr=this.board[cx][cy];
+					}
+					if(lostplr+lostemp>=this.k){
+						cntplayer=(cntplayer+1)%this.m;
+						return 0;
+					}
+				}	
+			}
+		}
 		
-		cntplayer=(cntplayer+1)%this.m;
-		return 0;
+		return 1;
 	}
 }
