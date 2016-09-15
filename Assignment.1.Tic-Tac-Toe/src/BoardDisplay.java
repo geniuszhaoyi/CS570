@@ -89,8 +89,8 @@ public class BoardDisplay implements iBoardDisplay {
 		System.out.println("How many players: ");
 		Scanner reader = new Scanner(System.in);
 		int numplayers = reader.nextInt();
+		reader.close();
 		return numplayers;
-		// TODO Auto-generated method stub
 	}
 
 	/*
@@ -103,9 +103,8 @@ public class BoardDisplay implements iBoardDisplay {
 		System.out.println("please set the number of rows: ");
 		Scanner reader = new Scanner(System.in);
 		int askNumRows = reader.nextInt();
+		reader.close();
 		return askNumRows;
-		// TODO Auto-generated method stub
-
 	}
 
 	/*
@@ -118,9 +117,8 @@ public class BoardDisplay implements iBoardDisplay {
 		System.out.println("please set the win sequence count: ");
 		Scanner reader = new Scanner(System.in);
 		int askNumWinseq = reader.nextInt();
+		reader.close();
 		return askNumWinseq;
-		// TODO Auto-generated method stub
-
 	}
 
 	/*
@@ -130,9 +128,9 @@ public class BoardDisplay implements iBoardDisplay {
 	 */
 	@Override
 	public int[] askNextStep() {
-		// TODO Auto-generated method stub
 		Scanner reader = new Scanner(System.in);
 		String str = reader.nextLine();
+		reader.close();
 		String[] parts = str.split(" ");
 		if (parts[0].equals("Q"))
 			return null;
@@ -152,7 +150,6 @@ public class BoardDisplay implements iBoardDisplay {
 	@Override
 	public void printWinTie(int wt, int st) { // wt: win(2) or tie(1), st:
 												// winner(win) or useless(tie)
-		// TODO Auto-generated method stub
 		if (wt == 2) {
 			System.out.println("The winner is:");
 			String rep = "XOABCDEFGHIJKLMNPQRSTUVWYZ";
@@ -166,8 +163,7 @@ public class BoardDisplay implements iBoardDisplay {
 		System.out.println("Load a saved game or press enter to create a new game:");
 		Scanner reader = new Scanner(System.in);
 		String str = reader.nextLine();
-
-		// TODO Auto-generated method stub
+		reader.close();
 		return str;
 	}
 
@@ -176,15 +172,14 @@ public class BoardDisplay implements iBoardDisplay {
 		System.out.println("save the game:");
 		Scanner reader = new Scanner(System.in);
 		String str = reader.nextLine();
-		// TODO Auto-generated method stub
+		reader.close();
 		return str;
 	}
 
 	@Override
 	public void printExceptionSavegame() {
-
-		// TODO Auto-generated method stub
-
+		System.out.println("Something wrong while saving the game. ");
+		System.out.println("Please try again. ");
 	}
 
 }
