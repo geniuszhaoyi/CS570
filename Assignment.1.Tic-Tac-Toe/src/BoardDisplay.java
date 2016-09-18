@@ -32,9 +32,10 @@ public class BoardDisplay implements iBoardDisplay {
 	@Override
 	public void printBoard(Board board) {
 //		board.board[0][3] = 1;
-//		String rep = "XOABCDEFGHIJKLMNPQRSTUVWYZ";
-//		if (rep.charAt(board.board[0][3]) == 'X')
-//			;
+		String rep = " XOABCDEFGHIJKLMNPQRSTUVWYZ";
+//		if (rep.charAt(board.board[0][3]+1) == 'X')
+//		rep.charAt(0)
+////			;
 		// -------------------------------------------------
 		int n = board.n;
 		System.out.print("   ");
@@ -64,9 +65,33 @@ public class BoardDisplay implements iBoardDisplay {
 			}
 		}
 		// -------------------------------------------------
-		
-		
-		
+		 for(int i=1;i<=n;i++)
+		 {
+		    System.out.println("");
+		    if(i<=9){
+		    	System.out.print(i +"  ");
+		    	for (int j = 1; j <= n; j++) {
+					System.out.print(" " + rep.charAt(board.board[i-1][j-1]+1)+ " |");
+				}
+		    }
+		    if(10<=i && i<=99){
+		    	System.out.print(i+" ");
+		    	for (int j = 1; j <= n; j++) {
+					System.out.print(" " + rep.charAt(board.board[i-1][j-1]+1)+ " |");
+				}
+		    }
+		    if(100<=i && i<=999){
+		    	System.out.print(i);
+		    	for (int j = 1; j <= n; j++) {
+					System.out.print(" " + rep.charAt(board.board[i-1][j-1]+1)+ " |");
+				}
+		    }
+		    System.out.println("");
+		    System.out.print("   ");
+		    for (int j = 0; j <= n-1; j++) {
+				System.out.print("---+");
+			}
+		 }
 		
 		
 		
@@ -76,6 +101,9 @@ public class BoardDisplay implements iBoardDisplay {
 	static public void main(String args[]){
 		Board board=new Board(15,105,3);
 		iBoardDisplay ib=new BoardDisplay();
+		int x[];
+		board.play(1, 5);
+		board.play(1, 9);
 		ib.printBoard(board);
 	}
 
@@ -128,6 +156,7 @@ public class BoardDisplay implements iBoardDisplay {
 	 */
 	@Override
 	public int[] askNextStep() {
+		System.out.println("Next move: ");
 		Scanner reader = new Scanner(System.in);
 		String str = reader.nextLine();
 		reader.close();
@@ -136,8 +165,8 @@ public class BoardDisplay implements iBoardDisplay {
 			return null;
 		else {
 			int ans[] = new int[2];
-			ans[0] = Integer.parseInt(parts[0]);
-			ans[1] = Integer.parseInt(parts[1]);
+			ans[0] = Integer.parseInt(parts[0])-1;
+			ans[1] = Integer.parseInt(parts[1])-1;
 			return ans;
 		}
 	}
