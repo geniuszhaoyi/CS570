@@ -18,7 +18,7 @@ public class Game {
 		
 		String loadgameFn=ibd.askIfLoadGame();
 		
-		if(loadgameFn==""){		//@Deprecated - should use Status Code
+		if(loadgameFn.compareTo("")==0){		//@Deprecated - should use Status Code
 			// Create a new game
 			int np=ibd.askNumPlayers();
 			int nr=ibd.askNumRows();
@@ -36,7 +36,7 @@ public class Game {
 				while(true){
 					try{
 						String sg=ibd.askforSaveGame();
-						if(sg!="") board.saveGame(sg);
+						if(sg.compareTo("")!=0) board.saveGame(sg);
 						break;
 					}catch(IngameException e){
 						ibd.printExceptionSavegame();

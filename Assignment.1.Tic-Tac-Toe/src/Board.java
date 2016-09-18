@@ -54,6 +54,8 @@ public class Board {
 		for(int i=0;i<NumRows;i++) for(int j=0;j<NumRows;j++){
 			this.board[i][j]=-1;
 		}
+		if(NumWinseq>NumRows) throw new IngameException("No winner");
+		if(NumRows*NumRows<NumPlayer*(NumWinseq-1)+1) throw new IngameException("No winner");
 	}
 	/**
 	 * Recreate a saved game from a file, given filename. 

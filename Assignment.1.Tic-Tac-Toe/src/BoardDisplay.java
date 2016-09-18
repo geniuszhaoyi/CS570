@@ -9,7 +9,23 @@ import java.util.Scanner;
  *
  */
 public class BoardDisplay implements iBoardDisplay {
-
+	Scanner reader;
+	BoardDisplay(){
+		reader = new Scanner(System.in);
+	}
+	int nextInt(){
+		int option = 0;
+		try {
+		    option = Integer.parseInt(reader.nextLine());
+		} catch (NumberFormatException e) {
+		    e.printStackTrace();
+		}
+		return option;
+	}
+	String nextLine(){
+		String str=reader.nextLine();
+		return str;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -70,43 +86,35 @@ public class BoardDisplay implements iBoardDisplay {
 		    System.out.println("");
 		    if(i<=9){
 		    	System.out.print(i +"  ");
-		    	for (int j = 1; j <= n; j++) {
-					System.out.print(" " + rep.charAt(board.board[i-1][j-1]+1)+ " |");
-				}
 		    }
 		    if(10<=i && i<=99){
 		    	System.out.print(i+" ");
-		    	for (int j = 1; j <= n; j++) {
-					System.out.print(" " + rep.charAt(board.board[i-1][j-1]+1)+ " |");
-				}
 		    }
 		    if(100<=i && i<=999){
 		    	System.out.print(i);
-		    	for (int j = 1; j <= n; j++) {
-					System.out.print(" " + rep.charAt(board.board[i-1][j-1]+1)+ " |");
-				}
 		    }
+	    	for (int j = 1; j <= n; j++) {
+				System.out.print(" " + rep.charAt(board.board[i-1][j-1]+1)+ " ");
+				if(j!=n) System.out.print("|");
+	    	}
 		    System.out.println("");
 		    System.out.print("   ");
-		    for (int j = 0; j <= n-1; j++) {
-				System.out.print("---+");
+		    for (int j = 1; i!=n && j <= n; j++) {
+				System.out.print("---");
+				if(j!=n) System.out.print("+");
 			}
 		 }
 		
-		
-		
-		// TODO Auto-generated method stub
-
+		System.out.println("Now it is "+rep.charAt(board.cntplayer+1)+"'s turn: ");
 	}
-	static public void main(String args[]){
+	static public void main1(String args[]){
 		Board board=new Board(15,105,3);
 		iBoardDisplay ib=new BoardDisplay();
-		int x[];
 		board.play(1, 5);
 		board.play(1, 9);
 		ib.printBoard(board);
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -115,9 +123,7 @@ public class BoardDisplay implements iBoardDisplay {
 	@Override
 	public int askNumPlayers() {
 		System.out.println("How many players: ");
-		Scanner reader = new Scanner(System.in);
-		int numplayers = reader.nextInt();
-		reader.close();
+		int numplayers = nextInt();
 		return numplayers;
 	}
 
@@ -129,9 +135,7 @@ public class BoardDisplay implements iBoardDisplay {
 	@Override
 	public int askNumRows() {
 		System.out.println("please set the number of rows: ");
-		Scanner reader = new Scanner(System.in);
-		int askNumRows = reader.nextInt();
-		reader.close();
+		int askNumRows = nextInt();
 		return askNumRows;
 	}
 
@@ -143,9 +147,7 @@ public class BoardDisplay implements iBoardDisplay {
 	@Override
 	public int askNumWinseq() {
 		System.out.println("please set the win sequence count: ");
-		Scanner reader = new Scanner(System.in);
-		int askNumWinseq = reader.nextInt();
-		reader.close();
+		int askNumWinseq = nextInt();
 		return askNumWinseq;
 	}
 
@@ -156,10 +158,7 @@ public class BoardDisplay implements iBoardDisplay {
 	 */
 	@Override
 	public int[] askNextStep() {
-		System.out.println("Next move: ");
-		Scanner reader = new Scanner(System.in);
-		String str = reader.nextLine();
-		reader.close();
+		String str = nextLine();
 		String[] parts = str.split(" ");
 		if (parts[0].equals("Q"))
 			return null;
@@ -179,29 +178,26 @@ public class BoardDisplay implements iBoardDisplay {
 	@Override
 	public void printWinTie(int wt, int st) { // wt: win(2) or tie(1), st:
 												// winner(win) or useless(tie)
+		System.out.println("Game over");
 		if (wt == 2) {
-			System.out.println("The winner is:");
-			String rep = "XOABCDEFGHIJKLMNPQRSTUVWYZ";
-			System.out.println(rep.charAt(st));
+			System.out.print("\n######## The winner is: ");
+			String rep = " XOABCDEFGHIJKLMNPQRSTUVWYZ";
+			System.out.println(rep.charAt(st+1)+" ########");
 		} else
-			System.out.println("Tie");
+			System.out.println("\n######## The game is a TIE ########");
 	}
 
 	@Override
 	public String askIfLoadGame() {
 		System.out.println("Load a saved game or press enter to create a new game:");
-		Scanner reader = new Scanner(System.in);
-		String str = reader.nextLine();
-		reader.close();
+		String str = nextLine();
 		return str;
 	}
 
 	@Override
 	public String askforSaveGame() {
 		System.out.println("save the game:");
-		Scanner reader = new Scanner(System.in);
-		String str = reader.nextLine();
-		reader.close();
+		String str = nextLine();
 		return str;
 	}
 
