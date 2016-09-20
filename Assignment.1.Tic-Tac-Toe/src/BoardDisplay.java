@@ -206,5 +206,10 @@ public class BoardDisplay implements iBoardDisplay {
 		System.out.println("Something wrong while saving the game. ");
 		System.out.println("Please try again. ");
 	}
-
+	
+	@Override
+	public void printException(Exception e){
+		System.out.println("######## ERROR! ########");
+		System.out.println(e.toString());
+	}
 }

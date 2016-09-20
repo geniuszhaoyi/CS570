@@ -76,4 +76,6 @@ public interface iBoardDisplay{
 	 * Print a message that save game failed. 
 	 */
 	void printExceptionSavegame();
+	
+	void printException(Exception e);
 }
