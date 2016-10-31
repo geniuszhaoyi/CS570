@@ -108,7 +108,26 @@ public class Huffman1 {
         return ans.toString();
 	}
 	static void writeFile(String filename, String str){
-		
+		try {
+
+			String content = str;
+
+			File file = new File("filename.txt");
+			
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(content);
+			bw.close();
+
+			System.out.println("Done");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	public static void main(String args[]){
