@@ -26,7 +26,7 @@ public class Huffman {
 		int[][]table=getTable();
 		String ans="";
 	   for(int i=0;i<table.length; i++)
-		ans+=(char)table[i][0]+" "+table[i][1]+"%/n";
+		ans+=(char)table[i][0]+", "+table[i][1]+"%\n";
 		return ans;
 	}
 	void doHuffman(){
@@ -38,8 +38,17 @@ public class Huffman {
 	}
 	String printHuffmanCode(){
 		String huffmanCode[]=getHuffmanCode();
-		//zhaoyi
-		return null;
+        String ans="";
+		for(int i='0';i<='9';i++){
+		ans+=(char)i+", "+huffmanCode[i]+"\n";	
+		}
+		for(int i='A';i<='Z';i++){
+			ans+=(char)i+", "+huffmanCode[i]+"\n";	
+			}
+		for(int i='a';i<='z';i++){
+			ans+=(char)i+", "+huffmanCode[i]+"\n";	
+			}
+		return ans;
 	}
 	String getEncoded(){
 		// TODO Complete this function
