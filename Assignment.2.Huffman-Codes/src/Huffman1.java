@@ -70,7 +70,17 @@ public class Huffman1 {
 	}
 	String printHuffmanCode(){
 		String huffmanCode[]=getHuffmanCode();
-		return null;
+        String ans="";
+ 		for(int i='0';i<='9';i++){
+ 		ans+=(char)i+", "+huffmanCode[i]+"\n";	
+ 		}
+ 		for(int i='A';i<='Z';i++){
+ 			ans+=(char)i+", "+huffmanCode[i]+"\n";	
+ 			}
+ 		for(int i='a';i<='z';i++){
+ 			ans+=(char)i+", "+huffmanCode[i]+"\n";	
+ 			}
+ 		return ans;
 	}
 	String getEncoded(){
 		// TODO Complete this function
