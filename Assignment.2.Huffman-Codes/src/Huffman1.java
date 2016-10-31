@@ -1,13 +1,10 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.Collections;
 
-
-public class Huffman {
+public class Huffman1 {
 	String text="";
 	int textlength=0;
 	int table[]=new int[256];
-	public Huffman(){
+	public Huffman1(){
 		for(int i=0;i<256;i++){
 			table[i]=0;
 		}
@@ -19,7 +16,7 @@ public class Huffman {
 	}
 	public int add(String str){
 		for(int i = 0; i < str.length(); i++) {  
-            add(str.charAt(i));  
+            add(str.charAt(i));
         }	
 		return str.length();
 	}
@@ -50,13 +47,18 @@ public class Huffman {
 				}
 			}
 		}
-		return null;
+		return table;
 	}
-	String printTable(){
+	public String printTable(){
 		int[][]table=getTable();
+		double sum=0.0;
 		String ans="";
-	   for(int i=0;i<table.length; i++)
-		ans+=(char)table[i][0]+" "+table[i][1]+"%/n";
+		for(int i=0;i<table.length; i++)
+			sum+=table[i][1];
+		for(int i=0;i<table.length; i++){
+			if(table[i][1]==0) break;
+			ans+=(char)table[i][0]+" "+(table[i][1]/sum*100.0)+"%\n";
+		}
 		return ans;
 	}
 	void doHuffman(){
@@ -74,7 +76,9 @@ public class Huffman {
 		// TODO Complete this function
 		return null;
 	}
-	// http://www.cnblogs.com/lovebread/archive/2009/11/23/1609122.html
+	/*
+	 *  http://www.cnblogs.com/lovebread/archive/2009/11/23/1609122.html
+	 */
 	static String readFileByChars(String fileName) {
         File file = new File(fileName);
         Reader reader = null;
@@ -93,8 +97,11 @@ public class Huffman {
         }
         return ans.toString();
 	}
-	static void main(String args[]){
+	public static void main(String args[]){
 		String input="infile.dat";
-		
+		String str=readFileByChars(input);
+		Huffman1 hf=new Huffman1();
+		hf.add(str);
+		System.out.println(hf.printTable());
 	}
 }
