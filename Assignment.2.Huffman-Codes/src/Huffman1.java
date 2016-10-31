@@ -75,10 +75,10 @@ public class Huffman1 {
  		ans+=(char)i+", "+huffmanCode[i]+"\n";	
  		}
  		for(int i='A';i<='Z';i++){
- 			ans+=(char)i+", "+huffmanCode[i]+"\n";	
+ 			ans+=(char)i+", "+huffmanCode[i]+"\n";
  			}
  		for(int i='a';i<='z';i++){
- 			ans+=(char)i+", "+huffmanCode[i]+"\n";	
+ 			ans+=(char)i+", "+huffmanCode[i]+"\n";
  			}
  		return ans;
 	}
@@ -107,6 +107,10 @@ public class Huffman1 {
         }
         return ans.toString();
 	}
+	static void writeFile(String filename, String str){
+		
+	}
+	
 	public static void main(String args[]){
 		String input="infile.dat";
 		String str=readFileByChars(input);
