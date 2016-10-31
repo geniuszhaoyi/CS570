@@ -10,20 +10,24 @@ public class Huffman {
 		}
 	}
 	public int add(char ch){
-		// TODO Complete this function
-		return 0;
+		table[ch]+=1;
+		return 1;
 	}
 	public int add(String str){
-		// TODO Complete this function
-		return 0;
+		for(int i = 0; i < str.length(); i++) {  
+            add(str.charAt(i));  
+        }	
+		return str.length();
 	}
-	int []getTable(){
-		// TODO Complete this function
+	int [][]getTable(){
 		return null;
 	}
 	String printTable(){
 		// TODO Complete this function
 		return null;
+	}
+	void doHuffman(){
+		
 	}
 	int []getHuffmanCode(){
 		// TODO Complete this function
