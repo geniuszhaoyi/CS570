@@ -38,6 +38,7 @@ public class Huffman {
 	}
 	String printHuffmanCode(){
 		String huffmanCode[]=getHuffmanCode();
+		//zhaoyi
 		return null;
 	}
 	String getEncoded(){
