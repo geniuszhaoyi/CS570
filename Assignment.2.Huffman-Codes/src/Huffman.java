@@ -23,14 +23,21 @@ public class Huffman {
 		return null;
 	}
 	String printTable(){
-		// TODO Complete this function
-		return null;
+		int[][]table=getTable();
+		String ans="";
+	   for(int i=0;i<table.length; i++)
+		ans+=(char)table[i][0]+" "+table[i][1]+"%/n";
+		return ans;
 	}
 	void doHuffman(){
 		
 	}
-	int []getHuffmanCode(){
+	String []getHuffmanCode(){
 		// TODO Complete this function
+		return null;
+	}
+	String printHuffmanCode(){
+		String huffmanCode[]=getHuffmanCode();
 		return null;
 	}
 	String getEncoded(){
