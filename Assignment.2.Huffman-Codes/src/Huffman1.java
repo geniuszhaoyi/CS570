@@ -88,7 +88,7 @@ public class Huffman1 {
 			sum+=table[i][1];
 		for(int i=0;i<table.length; i++){
 			if(table[i][1]==0) break;
-			ans+=table[i][1]+"\t"+(char)table[i][0]+", "+(table[i][1]/sum*100.0)+"%\n";
+			ans+=(char)table[i][0]+", "+(table[i][1]/sum*100.0)+"%\n";
 		}
 		return ans;
 	}
@@ -153,7 +153,7 @@ public class Huffman1 {
 	/*
 	 *  http://www.cnblogs.com/lovebread/archive/2009/11/23/1609122.html
 	 */
-	static String readFileByChars(String fileName) {
+	static String readFileByChars(String fileName) throws Exception{
         File file = new File(fileName);
         Reader reader = null;
         StringBuffer ans=new StringBuffer();;
@@ -167,11 +167,11 @@ public class Huffman1 {
             }
             reader.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
         return ans.toString();
 	}
-	static void writeFile(String filename, String content){
+	static void writeFile(String filename, String content) throws Exception{
 		try {
 			File file = new File(filename);
 			
@@ -184,20 +184,60 @@ public class Huffman1 {
 			bw.write(content);
 			bw.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new Exception(e.getMessage());
 		}	
 	}
-	
+	public void stringcheck(String str) throws Exception{
+		if(str==null) throw new Exception("String not exist! ");
+		if(str.length()==0) throw new Exception("String is empty! Check your infile.dat");
+		if(str.length()<=1) throw new Exception("String is too short! Check your infile.dat");
+		
+		int i;
+		int table[]=new int[256];
+		for(i=0;i<256;i++) table[i]=0;
+		
+		int j=0;
+		for(i=0;i<str.length();i++){
+			table[str.charAt(i)]+=1;
+		}
+		for(i='a';i<='z';i++){
+			if(table[i]!=0) j+=1;
+		}
+		for(i='A';i<='Z';i++){
+			if(table[i]!=0) j+=1;
+		}
+		for(i='0';i<='9';i++){
+			if(table[i]!=0) j+=1;
+		}
+		if(j<=1) throw new Exception("too few difference chars! Check your infile.dat");
+		
+		if(str.length()>=100000000) throw new Exception("String is too large! Check your infile.dat");
+		
+		
+	}
 	public static void main(String args[]){
-		String input="infile.dat";
-		String str=readFileByChars(input);
-		String ans="";
-		Huffman1 hf=new Huffman1();
-		hf.add(str);
-		ans+=hf.printTable();
-		hf.doHuffman();
-		ans+=hf.printHuffmanCode();
-		ans+=hf.getEncoded(str).length();
-		writeFile("outfile.dat",ans);
+		try{
+			String input="infile.dat";
+			Huffman1 hf=new Huffman1();
+			String ans="";
+			String str="";
+			str=readFileByChars(input);
+			hf.stringcheck(str);			
+			hf.add(str);
+			ans+="- 1. The frequency table for the source text\n";
+			ans+=hf.printTable();
+			hf.doHuffman();
+			ans+="\n- 2. The Huffman code for each letter and digit in the source code\n";
+			ans+=hf.printHuffmanCode();
+			ans+="\n- 3. The length of the coded message in terms of number of bits\n";
+			ans+=hf.getEncoded(str).length();
+			writeFile("outfile.dat",ans);
+			System.out.println("Succeed! See outfile.dat");
+		}catch(Exception e){
+			System.out.println("########\nERROR!\n########");
+			System.out.println(e.getMessage());
+//			e.printStackTrace();
+			return ;
+		}
 	}
 }
