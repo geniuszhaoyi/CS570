@@ -2,7 +2,8 @@ import java.util.*;
 import java.io.*;
 
 public class IO1 implements IO {
-
+	int totle=0;
+	
 	@Override
 	public String[][] readCompanys(String path) {
 		try {
@@ -36,8 +37,14 @@ public class IO1 implements IO {
 	@Override
 	public String printRelevance(Map<String, Integer> map) {
 		StringBuffer sb=new StringBuffer();
-		sb.append("Company\tHit Count\tRelevance");
-		return null;
+		sb.append("Company\tHit Count\tRelevance\n");
+		int sum=0;
+		for (Map.Entry<String, Integer> entry : map.entrySet()){
+			sb.append(entry.getKey()+"\t"+entry.getValue()+"\t"+((double)entry.getValue()/totle)+"%\n");
+			sum+=entry.getValue();
+		}
+		sb.append("Totle:\t"+sum+"\t"+((double)sum/totle)+"\n");
+		sb.append("Totle Words:\t"+sum+'\n');
+		return sb.toString();
 	}
-
 }
