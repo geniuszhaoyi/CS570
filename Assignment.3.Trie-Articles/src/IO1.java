@@ -31,7 +31,16 @@ public class IO1 implements IO {
 	@Override
 	public String readArticle() {
 		// TODO Auto-generated method stub
-		return null;
+		Scanner sin=new Scanner(System.in);
+		sin.nextLine();
+		StringBuffer sb=new StringBuffer();
+		while(true){
+			String str=sin.nextLine();
+			if (str==".") break;
+			
+			sb.append(str);
+		}
+		return sb.toString();
 	}
 
 	@Override
