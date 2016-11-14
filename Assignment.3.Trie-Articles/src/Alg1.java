@@ -1,17 +1,16 @@
-import java.util.*;
 
 ///searching the text for each company name
 public class Alg1 implements Algorithm {
 	@Override
-	public Map<String, Integer> go(String[][] companies, String article) {
-		Map<String, Integer> map=new HashMap<String, Integer>();
+	public int[]go(String[][] companies, String article) {
+		int[]map=new int[companies.length];
 		
 		for(int i=0;i<companies.length;i++){
 			int sum=0;
-			for(int j=0;j<companies[i].length;j++){
+			for(int j=1;j<companies[i].length;j++){
 				sum+=kmp(article, companies[i][j]);
 			}
-			map.put(companies[i][0],sum);
+			map[i]=sum;
 		}
 
 		return map;
