@@ -1,4 +1,5 @@
+import Data.*;
 
 public interface Algorithm {
-	int []go(String [][] companies, String article);
+	public void genmap(Company []companies, Article article);
 }

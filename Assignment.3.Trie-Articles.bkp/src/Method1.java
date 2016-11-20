@@ -6,6 +6,6 @@ public class Method1 {
 		String [][] companies=io.readCompanys("companies.dat");
 		String article=io.readArticle();
 		int[]map=al.go(companies, article);
-		System.out.println(io.printRelevance(map, companies));
+		System.out.println(io.printRelevance(map, companies, article));
 	}
 }
