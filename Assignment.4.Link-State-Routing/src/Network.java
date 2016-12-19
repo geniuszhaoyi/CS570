@@ -1,16 +1,13 @@
 /**
- * 
- */
-
-/**
  * @author ZhaoYi
  *
  */
 public class Network {
 	Graph g;
+	Router[] routers;
 	
 	public Network(FileReader fr){
-		
+		routers=fr.read_infile_dat();
 	}
 	
 	public void Continue(){
