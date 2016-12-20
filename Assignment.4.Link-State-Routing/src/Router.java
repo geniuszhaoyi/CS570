@@ -13,7 +13,7 @@ public class Router {
 	
 	public Tables tables;	//routing table
 	public int lsp_seq=1;
-		
+	
 	int tick=0;
 	public Map<Integer,Integer> LastSeenTick=new HashMap<Integer,Integer>();
 	//public int[] LastSeenTick;
