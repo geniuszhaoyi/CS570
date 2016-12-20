@@ -67,6 +67,7 @@ public class Main {
 			else{
 				System.out.println("please input the right format!");
 			}
+			scanner.close();
 		}
 	}
 }

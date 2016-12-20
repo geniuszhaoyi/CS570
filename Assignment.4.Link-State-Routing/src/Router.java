@@ -9,41 +9,59 @@ public class Router {
 	public String name;
 	public float network_cost;
 	public Link[] links;	//direct connected routers
-	public Table[] tables;	//routing table
-	public Map<Integer,Integer> SeenSEQFromRouter=new HashMap<Integer,Integer>();
+	public Tables tables;	//routing table
 	public int lsp_seq=1;
 	
-	public void receivePacket(LSP lsp, int senderID){
+	public int[] outgoint_routerID;
+	
+	int tick=0;
+	public Map<Integer,Integer> LastSeenTick=new HashMap<Integer,Integer>();
+	//public int[] LastSeenTick;
+	public Map<Integer,Integer> SeenSEQFromRouter=new HashMap<Integer,Integer>();
+	
+	public void receivePacket(LSP rclsp, int senderID){
+		LSP lsp=new LSP(rclsp);
 		lsp.ttl-=1;
+		LastSeenTick.put(senderID, tick); //I see this router on this tick
 		if(lsp.ttl<=0 || (SeenSEQFromRouter.get(lsp.ori_router_ID)!=null && 
 				lsp.ttl<=SeenSEQFromRouter.get(lsp.ori_router_ID))){
 			//Discard this LSP
 		}else{
+			//LSP not discarded
+			SeenSEQFromRouter.put(senderID, lsp.seq); //Highest SEQ from this router
 			//Compare with routing table
-			// TODO Auto-generated method stub
+			float cost_this_to_LSPOrigin=this.tables.get_cost_routerID(lsp.ori_router_ID);
+			for(int i=0;i<lsp.tables.length;i++){
+				float cost_ori_to_dst=lsp.tables.get_cost_routerID(lsp.tables.at(i).dst_routerID);
+				float cost_this_to_dst=this.tables.get_cost_routerID(lsp.tables.at(i).dst_routerID);
+				if(cost_this_to_dst > cost_this_to_LSPOrigin + cost_ori_to_dst){
+					cost_this_to_dst = cost_this_to_LSPOrigin + cost_ori_to_dst;
+					this.tables.set_cost_routerID(lsp.tables.at(i).dst_routerID,cost_this_to_dst);
+				}
+			}
 			
 			//send out LSP
 			for(int i=0;i<links.length;i++) if(links[i].dst_router_id!=senderID) 
 				links[i].dst_router.receivePacket(lsp, routerID);
 		}
 	}
-	/**
-	 * The router class should also contain a function named something similar to originatePacket 
-	 * that takes no arguments. This function will perform two functions. It should cause the router 
-	 * to generate an LSP packet based on the current state of the network as it understands it, 
-	 * and send it to all directly connected routers. Before it sends the packet, however, it should 
-	 * also increment a "tick" counter and consider if there are any directly connected routers 
-	 * from which it has not received a packet in 2 ticks. If that occurs, the router should alter 
-	 * its graph to reflect that the cost of the link to the other router is now infinity (or some 
-	 * arbitrarily huge number that you choose to represent infinity, if your language does not 
-	 * have a special infinity value.).
-	 */
+
 	public void originatePacket(){
+		tick+=1;
+		//directly connected routers no response
+		for(int i=0;i<outgoint_routerID.length;i++){
+			if(LastSeenTick.get(outgoint_routerID[i])<=tick-2){
+				this.tables.set_cost2Inf_routerID(outgoint_routerID[i]);
+			}
+		}
+		
 		LSP lsp=new LSP();
 		lsp.ori_router_ID=routerID;
 		lsp.seq=lsp_seq; lsp_seq+=1;
 		lsp.ttl=10;
-		lsp.tables=new Table[tables.length];
-		// TODO Auto-generated method stub
+		lsp.tables=tables;
+		
+		for(int i=0;i<links.length;i++)
+			links[i].dst_router.receivePacket(lsp, routerID);
 	}
 }
