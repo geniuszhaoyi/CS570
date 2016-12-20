@@ -9,6 +9,8 @@ public class Router {
 	public String name;
 	public float network_cost;
 	public Link[] links;	//direct connected routers
+	public Map<Integer,Router> ID_to_Router;	//
+	
 	public Tables tables;	//routing table
 	public int lsp_seq=1;
 		
@@ -40,7 +42,7 @@ public class Router {
 			
 			//send out LSP
 			for(int i=0;i<links.length;i++) if(links[i].dst_router_id!=senderID) 
-				links[i].dst_router.receivePacket(lsp, routerID);
+				ID_to_Router.get(links[i].dst_router_id).receivePacket(lsp, routerID);
 		}
 	}
 
@@ -61,6 +63,6 @@ public class Router {
 		lsp.tables=tables;
 		
 		for(int i=0;i<links.length;i++)
-			links[i].dst_router.receivePacket(lsp, routerID);
+			ID_to_Router.get(links[i].dst_router_id).receivePacket(lsp, routerID);
 	}
 }
