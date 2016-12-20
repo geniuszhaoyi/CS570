@@ -9,7 +9,9 @@ public class Router {
 	public String name;
 	public float network_cost;
 	public Link[] links;	//direct connected routers
-	public Map<Integer,Router> ID_to_Router;	//
+	public Map<Integer,Router> ID_to_Router;	//Used for call functions
+	
+	public Boolean ON = true;
 	
 	public Tables tables;	//routing table
 	public int lsp_seq=1;
@@ -31,12 +33,13 @@ public class Router {
 			SeenSEQFromRouter.put(senderID, lsp.seq); //Highest SEQ from this router
 			//Compare with routing table
 			float cost_this_to_LSPOrigin=this.tables.get_cost_routerID(lsp.ori_router_ID);
+			int outgoing_routerID=this.tables.get_outgoingrouterID_routerID(lsp.ori_router_ID);
 			for(int i=0;i<lsp.tables.length;i++){
 				float cost_ori_to_dst=lsp.tables.get_cost_routerID(lsp.tables.at(i).dst_routerID);
 				float cost_this_to_dst=this.tables.get_cost_routerID(lsp.tables.at(i).dst_routerID);
 				if(cost_this_to_dst > cost_this_to_LSPOrigin + cost_ori_to_dst){
 					cost_this_to_dst = cost_this_to_LSPOrigin + cost_ori_to_dst;
-					this.tables.set_cost_routerID(lsp.tables.at(i).dst_routerID,cost_this_to_dst);
+					this.tables.set_table(lsp.tables.at(i).dst_routerID,cost_this_to_dst,outgoing_routerID);
 				}
 			}
 			
@@ -51,7 +54,8 @@ public class Router {
 		//directly connected routers no response
 		
 		for(int i=0;i<links.length;i++){
-			if(LastSeenTick.get(links[i].dst_router_id)<=tick-2){
+			if(LastSeenTick.get(links[i].dst_router_id)==null || 
+					LastSeenTick.get(links[i].dst_router_id)<=tick-2){
 				this.tables.set_cost2Inf_routerID(links[i].dst_router_id);
 			}
 		}
