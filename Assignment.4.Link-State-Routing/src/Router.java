@@ -11,9 +11,7 @@ public class Router {
 	public Link[] links;	//direct connected routers
 	public Tables tables;	//routing table
 	public int lsp_seq=1;
-	
-	public int[] outgoint_routerID;
-	
+		
 	int tick=0;
 	public Map<Integer,Integer> LastSeenTick=new HashMap<Integer,Integer>();
 	//public int[] LastSeenTick;
@@ -49,9 +47,10 @@ public class Router {
 	public void originatePacket(){
 		tick+=1;
 		//directly connected routers no response
-		for(int i=0;i<outgoint_routerID.length;i++){
-			if(LastSeenTick.get(outgoint_routerID[i])<=tick-2){
-				this.tables.set_cost2Inf_routerID(outgoint_routerID[i]);
+		
+		for(int i=0;i<links.length;i++){
+			if(LastSeenTick.get(links[i].dst_router_id)<=tick-2){
+				this.tables.set_cost2Inf_routerID(links[i].dst_router_id);
 			}
 		}
 		
