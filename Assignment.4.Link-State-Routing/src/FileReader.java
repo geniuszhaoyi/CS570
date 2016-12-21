@@ -23,10 +23,11 @@ public class FileReader {
 			IRouter CR = null;
 			for(int i=0;i<text.length;i++){
 				if(text[i].charAt(0)=='\t'||text[i].charAt(0)==' '){
-					Link CL=new Link();
-					String[] parts=text[i].split(" ");
+					Link CL=new Link();	//Current Link
+					String[] parts=StringSplit.split(text[i]);
 					if(parts.length==1){
 						CL.dst_router_id=Integer.parseInt(parts[0]);
+						CL.init_link_cost=1.0f;
 						CR.arrlinks.add(CL);
 					}
 					else{
@@ -35,8 +36,8 @@ public class FileReader {
 						CR.arrlinks.add(CL);
 					}
 				}else{
-					CR = new IRouter();
-					String[] parts=text[i].split(" ");
+					CR = new IRouter();	//Current Router
+					String[] parts=StringSplit.split(text[i]);
 					CR.arrlinks=new ArrayList<Link>();
 					if(parts.length==2){
 						CR.routerID=Integer.parseInt(parts[0]);

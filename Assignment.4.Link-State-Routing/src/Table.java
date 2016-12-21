@@ -11,8 +11,9 @@ public class Table {
 		this.cost=cost;
 		this.outgoing_routerID=outgoing_routerID;
 	}
-	public Table removeOutgoing(){
-		this.outgoing_routerID=-1;
-		return this;
+	public Table(Table table){
+		this.dst_routerID=table.dst_routerID;
+		this.cost=table.cost;
+		this.outgoing_routerID=table.outgoing_routerID;
 	}
 }
