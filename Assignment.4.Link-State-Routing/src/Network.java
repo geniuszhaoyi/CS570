@@ -64,9 +64,8 @@ public class Network {
 		}
 	}
 	public void Print(int routerID){
-		// TODO Auto-generated method stub
 		System.out.println(">>print "+routerID);
-		
+		NetworkPrint.print(routers.get(routerID).tables.tables);
 	}
 	public void ShutDown(int routerID){
 		System.out.println(">>shutdown "+routerID);
